@@ -4,22 +4,5 @@
   "outputDirectory": "dist",
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "dist/index.js": {
-      "runtime": "nodejs@20.x",
-      "memory": 1024,
-      "maxDuration": 60
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/api/:path*",
-      "destination": "/index.js"
-    },
-    {
-      "source": "/:path*",
-      "destination": "/:path*"
-    }
-  ]
+  }
 }
