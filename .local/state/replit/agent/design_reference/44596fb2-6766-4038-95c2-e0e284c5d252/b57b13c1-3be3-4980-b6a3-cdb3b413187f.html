@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberDev Portfolio - Full Stack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'matrix': '#00ff41',
+                        'matrix-dark': '#39ff14',
+                        'cyber-pink': '#ff006e',
+                        'cyber-purple': '#8338ec',
+                        'cyber-cyan': '#00f5ff',
+                        'cyber-yellow': '#ffbe0b',
+                        'dark-bg': '#0a0a0a',
+                        'dark-surface': '#121212',
+                        'dark-card': '#1a1a1a',
+                        'terminal-gray': '#404040',
+                        'glow-green': 'rgba(0, 255, 65, 0.3)',
+                        'glow-pink': 'rgba(255, 0, 110, 0.3)',
+                        'glow-purple': 'rgba(131, 56, 236, 0.3)',
+                        'glow-cyan': 'rgba(0, 245, 255, 0.3)'
+                    },
+                    fontFamily: {
+                        'mono': ['JetBrains Mono', 'monospace'],
+                        'futuristic': ['Orbitron', 'sans-serif'],
+                        'body': ['Inter', 'sans-serif']
+                    },
+                    animation: {
+                        'matrix-rain': 'matrix-rain 3s linear infinite',
+                        'terminal-blink': 'terminal-blink 1s step-end infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
+                        'code-scroll': 'code-scroll 20s linear infinite',
+                        'typing': 'typing 3s steps(30, end)',
+                        'particle-float': 'particle-float 4s ease-in-out infinite',
+                        'skill-progress': 'skill-progress 2s ease-out'
+                    },
+                    keyframes: {
+                        'matrix-rain': {
+                            '0%': { transform: 'translateY(-100vh)' },
+                            '100%': { transform: 'translateY(100vh)' }
+                        },
+                        'terminal-blink': {
+                            '0%, 50%': { opacity: '1' },
+                            '51%, 100%': { opacity: '0' }
+                        },
+                        'float': {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        'pulse-glow': {
+                            '0%': { 'box-shadow': '0 0 20px rgba(0, 255, 65, 0.3)' },
+                            '100%': { 'box-shadow': '0 0 40px rgba(0, 255, 65, 0.6)' }
+                        },
+                        'code-scroll': {
+                            '0%': { transform: 'translateX(100%)' },
+                            '100%': { transform: 'translateX(-100%)' }
+                        },
+                        'typing': {
+                            '0%': { width: '0' },
+                            '100%': { width: '100%' }
+                        },
+                        'particle-float': {
+                            '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },
+                            '25%': { transform: 'translate(10px, -10px) rotate(90deg)' },
+                            '50%': { transform: 'translate(-5px, -20px) rotate(180deg)' },
+                            '75%': { transform: 'translate(-10px, -10px) rotate(270deg)' }
+                        },
+                        'skill-progress': {
+                            '0%': { width: '0%' },
+                            '100%': { width: 'var(--progress-width)' }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            background: rgba(26, 26, 26, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .terminal-window {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            box-shadow: 
+                0 0 30px rgba(0, 255, 65, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .neon-text {
+            text-shadow: 
+                0 0 5px currentColor,
+                0 0 10px currentColor,
+                0 0 15px currentColor,
+                0 0 20px currentColor;
+        }
+        
+        .matrix-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(0, 255, 65, 0.3), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(0, 255, 65, 0.2), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(0, 255, 65, 0.4), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(0, 255, 65, 0.2), transparent),
+                radial-gradient(2px 2px at 160px 30px, rgba(0, 255, 65, 0.3), transparent);
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: matrix-rain 10s linear infinite;
+            pointer-events: none;
+        }
+        
+        .skill-hexagon {
+            width: 120px;
+            height: 104px;
+            position: relative;
+            margin: 52px auto;
+            transform: rotate(30deg);
+        }
+        
+        .skill-hexagon::before,
+        .skill-hexagon::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+        }
+        
+        .skill-hexagon::before {
+            bottom: 100%;
+            border-bottom: 30px solid #00ff41;
+        }
+        
+        .skill-hexagon::after {
+            top: 100%;
+            border-top: 30px solid #00ff41;
+        }
+        
+        .hexagon-content {
+            background: #00ff41;
+            height: 60px;
+            width: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0a0a0a;
+            font-weight: bold;
+            font-size: 12px;
+            transform: rotate(-30deg);
+        }
+        
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: rgba(0, 255, 65, 0.6);
+            animation: particle-float 4s ease-in-out infinite;
+        }
+        
+        .ide-tab {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border-top: 2px solid #00ff41;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ide-tab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .ide-tab:hover::before {
+            left: 100%;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(90deg, #00ff41 0%, #39ff14 100%);
+            height: 8px;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: code-scroll 2s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-dark-bg text-white font-body overflow-x-hidden">
+    <!-- Matrix Rain Background -->
+    <div class="fixed inset-0 matrix-bg pointer-events-none z-0"></div>
+    
+    <!-- Floating Particles -->
+    <div class="floating-particles">
+        <div class="particle" style="left: 10%; top: 20%; animation-delay: 0s;">{ }</div>
+        <div class="particle" style="left: 80%; top: 30%; animation-delay: 1s;">const</div>
+        <div class="particle" style="left: 20%; top: 60%; animation-delay: 2s;">function()</div>
+        <div class="particle" style="left: 70%; top: 80%; animation-delay: 3s;">=></div>
+        <div class="particle" style="left: 40%; top: 40%; animation-delay: 1.5s;">async</div>
+        <div class="particle" style="left: 60%; top: 70%; animation-delay: 0.5s;">await</div>
+        <div class="particle" style="left: 30%; top: 90%; animation-delay: 2.5s;">console.log</div>
+        <div class="particle" style="left: 90%; top: 10%; animation-delay: 3.5s;">return</div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-effect border-b border-matrix/20">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="font-mono text-matrix neon-text">
+                    <span class="text-cyber-cyan">&gt;</span> 
+                    <span class="animate-terminal-blink">_</span>
+                    <span class="text-lg font-bold">CyberDev.exe</span>
+                </div>
+                
+                <div class="hidden md:flex space-x-8 font-mono">
+                    <a href="#home" class="hover:text-matrix transition-colors group">
+                        <span class="text-cyber-cyan">[</span>home<span class="text-cyber-cyan">]</span>
+                    </a>
+                    <a href="#about" class="hover:text-matrix transition-colors">
+                        <span class="text-cyber-pink">[</span>about<span class="text-cyber-pink">]</span>
+                    </a>
+                    <a href="#skills" class="hover:text-matrix transition-colors">
+                        <span class="text-cyber-purple">[</span>skills<span class="text-cyber-purple">]</span>
+                    </a>
+                    <a href="#projects" class="hover:text-matrix transition-colors">
+                        <span class="text-cyber-yellow">[</span>projects<span class="text-cyber-yellow">]</span>
+                    </a>
+                    <a href="#contact" class="hover:text-matrix transition-colors">
+                        <span class="text-matrix">[</span>contact<span class="text-matrix">]</span>
+                    </a>
+                </div>
+                
+                <!-- Theme Toggle -->
+                <button class="glass-effect p-2 rounded-lg hover:bg-glow-green transition-all">
+                    <i class="fas fa-moon text-matrix"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative pt-20">
+        <div class="container mx-auto px-6 text-center">
+            <!-- Terminal Window -->
+            <div class="terminal-window rounded-xl p-8 max-w-4xl mx-auto mb-12 relative animate-float">
+                <!-- Terminal Header -->
+                <div class="flex items-center mb-6 border-b border-terminal-gray pb-4">
+                    <div class="flex space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <div class="flex-1 text-center font-mono text-sm text-gray-400">
+                        ~/portfolio/introduction.js
+                    </div>
+                </div>
+                
+                <!-- Terminal Content -->
+                <div class="text-left font-mono text-sm space-y-2">
+                    <div class="text-cyber-cyan">
+                        <span class="text-cyber-pink">const</span> 
+                        <span class="text-cyber-yellow">developer</span> = {
+                    </div>
+                    <div class="ml-4">
+                        <span class="text-cyber-purple">name:</span> 
+                        <span class="text-matrix">'John Smith'</span>,
+                    </div>
+                    <div class="ml-4">
+                        <span class="text-cyber-purple">role:</span> 
+                        <span class="text-matrix">'Full Stack Developer'</span>,
+                    </div>
+                    <div class="ml-4">
+                        <span class="text-cyber-purple">skills:</span> 
+                        <span class="text-white">[</span><span class="text-matrix">'React'</span>, <span class="text-matrix">'Node.js'</span>, <span class="text-matrix">'Python'</span>, <span class="text-matrix">'MongoDB'</span><span class="text-white">]</span>,
+                    </div>
+                    <div class="ml-4">
+                        <span class="text-cyber-purple">passion:</span> 
+                        <span class="text-matrix">'Building the future with code'</span>,
+                    </div>
+                    <div class="ml-4">
+                        <span class="text-cyber-purple">experience:</span> 
+                        <span class="text-cyber-yellow">5</span> + <span class="text-matrix">' years'</span>
+                    </div>
+                    <div class="text-cyber-cyan">};</div>
+                    <div class="mt-4">
+                        <span class="text-cyber-pink">console</span><span class="text-white">.</span><span class="text-cyber-yellow">log</span><span class="text-white">(</span><span class="text-matrix">'Welcome to my digital realm!'</span><span class="text-white">);</span>
+                    </div>
+                    <div class="text-matrix">
+                        <span class="animate-terminal-blink">▶</span> Welcome to my digital realm!
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Title -->
+            <h1 class="text-5xl md:text-7xl font-futuristic font-bold mb-6">
+                <span class="text-matrix neon-text">CYBER</span>
+                <span class="text-cyber-pink neon-text">DEV</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 mb-8 font-mono">
+                Architecting digital experiences through <span class="text-matrix">innovative code</span>
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col md:flex-row gap-6 justify-center">
+                <button class="glass-effect px-8 py-4 rounded-lg border border-matrix/50 hover:border-matrix hover:shadow-lg hover:shadow-glow-green transition-all font-mono group">
+                    <i class="fas fa-terminal mr-2"></i>
+                    Initialize Portfolio
+                    <span class="ml-2 opacity-0 group-hover:opacity-100 transition-opacity">▶</span>
+                </button>
+                <button class="glass-effect px-8 py-4 rounded-lg border border-cyber-pink/50 hover:border-cyber-pink hover:shadow-lg hover:shadow-glow-pink transition-all font-mono group">
+                    <i class="fas fa-download mr-2"></i>
+                    Download Resume
+                    <span class="ml-2 opacity-0 group-hover:opacity-100 transition-opacity">↓</span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div class="w-6 h-10 border-2 border-matrix rounded-full flex justify-center">
+                <div class="w-1 h-3 bg-matrix rounded-full mt-2 animate-pulse"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-futuristic font-bold mb-4">
+                    <span class="text-cyber-cyan neon-text">ABOUT</span>
+                    <span class="text-white">.</span><span class="text-matrix">EXE</span>
+                </h2>
+                <div class="w-32 h-1 bg-gradient-to-r from-cyber-cyan to-matrix mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Profile Image -->
+                <div class="text-center">
+                    <div class="relative inline-block">
+                        <!-- Developer avatar placeholder with futuristic frame -->
+                        <div class="w-80 h-80 mx-auto relative">
+                            <div class="absolute inset-0 rounded-full border-4 border-matrix animate-pulse-glow"></div>
+                            <div class="absolute inset-2 rounded-full border-2 border-cyber-pink/50"></div>
+                            <div class="absolute inset-4 rounded-full glass-effect flex items-center justify-center">
+                                <i class="fas fa-user-astronaut text-8xl text-matrix"></i>
+                            </div>
+                        </div>
+                        <div class="absolute -top-4 -right-4 glass-effect p-3 rounded-full border border-matrix/50">
+                            <i class="fas fa-code text-matrix"></i>
+                        </div>
+                        <div class="absolute -bottom-4 -left-4 glass-effect p-3 rounded-full border border-cyber-pink/50">
+                            <i class="fas fa-laptop-code text-cyber-pink"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- About Content -->
+                <div class="space-y-6">
+                    <div class="terminal-window rounded-lg p-6">
+                        <div class="font-mono text-sm space-y-3">
+                            <div class="text-cyber-cyan">
+                                <span class="text-cyber-pink">// </span>Developer Profile
+                            </div>
+                            <div class="text-white">
+                                Greetings! I'm a passionate full-stack developer who transforms 
+                                <span class="text-matrix">coffee into code</span> and 
+                                <span class="text-cyber-pink">ideas into digital reality</span>.
+                            </div>
+                            <div class="text-white">
+                                With <span class="text-cyber-yellow font-bold">5+ years</span> of experience 
+                                in the digital realm, I specialize in crafting 
+                                <span class="text-matrix">scalable applications</span> and 
+                                <span class="text-cyber-cyan">immersive user experiences</span>.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tech Stats -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="glass-effect p-4 rounded-lg text-center border border-matrix/20 hover:border-matrix/50 transition-all">
+                            <div class="text-2xl font-bold text-matrix">50+</div>
+                            <div class="text-sm text-gray-400 font-mono">Projects Built</div>
+                        </div>
+                        <div class="glass-effect p-4 rounded-lg text-center border border-cyber-pink/20 hover:border-cyber-pink/50 transition-all">
+                            <div class="text-2xl font-bold text-cyber-pink">5+</div>
+                            <div class="text-sm text-gray-400 font-mono">Years Experience</div>
+                        </div>
+                        <div class="glass-effect p-4 rounded-lg text-center border border-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all">
+                            <div class="text-2xl font-bold text-cyber-cyan">20+</div>
+                            <div class="text-sm text-gray-400 font-mono">Tech Stack</div>
+                        </div>
+                        <div class="glass-effect p-4 rounded-lg text-center border border-cyber-yellow/20 hover:border-cyber-yellow/50 transition-all">
+                            <div class="text-2xl font-bold text-cyber-yellow">∞</div>
+                            <div class="text-sm text-gray-400 font-mono">Learning Mode</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-futuristic font-bold mb-4">
+                    <span class="text-cyber-purple neon-text">SKILL</span>
+                    <span class="text-white">.</span><span class="text-matrix">TREE</span>
+                </h2>
+                <div class="w-32 h-1 bg-gradient-to-r from-cyber-purple to-matrix mx-auto"></div>
+            </div>
+            
+            <!-- Skills Grid -->
+            <div class="grid md:grid-cols-3 gap-8 mb-16">
+                <!-- Frontend -->
+                <div class="glass-effect rounded-xl p-8 border border-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all group">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-code text-4xl text-cyber-cyan mb-4"></i>
+                        <h3 class="text-2xl font-futuristic font-bold text-cyber-cyan">FRONTEND</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">React.js</span>
+                                <span class="font-mono text-xs text-matrix">95%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">Next.js</span>
+                                <span class="font-mono text-xs text-matrix">90%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">TypeScript</span>
+                                <span class="font-mono text-xs text-matrix">88%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">Tailwind CSS</span>
+                                <span class="font-mono text-xs text-matrix">92%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Backend -->
+                <div class="glass-effect rounded-xl p-8 border border-cyber-pink/20 hover:border-cyber-pink/50 transition-all group">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-server text-4xl text-cyber-pink mb-4"></i>
+                        <h3 class="text-2xl font-futuristic font-bold text-cyber-pink">BACKEND</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">Node.js</span>
+                                <span class="font-mono text-xs text-matrix">93%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 93%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">Express.js</span>
+                                <span class="font-mono text-xs text-matrix">91%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 91%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">Python</span>
+                                <span class="font-mono text-xs text-matrix">87%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 87%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">GraphQL</span>
+                                <span class="font-mono text-xs text-matrix">85%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Database & Tools -->
+                <div class="glass-effect rounded-xl p-8 border border-cyber-yellow/20 hover:border-cyber-yellow/50 transition-all group">
+                    <div class="text-center mb-6">
+                        <i class="fas fa-database text-4xl text-cyber-yellow mb-4"></i>
+                        <h3 class="text-2xl font-futuristic font-bold text-cyber-yellow">DATABASE</h3>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">MongoDB</span>
+                                <span class="font-mono text-xs text-matrix">89%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 89%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">PostgreSQL</span>
+                                <span class="font-mono text-xs text-matrix">86%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 86%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">Docker</span>
+                                <span class="font-mono text-xs text-matrix">84%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 84%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-item" data-mock="true">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-mono text-sm">AWS</span>
+                                <span class="font-mono text-xs text-matrix">82%</span>
+                            </div>
+                            <div class="bg-terminal-gray rounded-full h-2">
+                                <div class="progress-bar rounded-full" style="width: 82%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Skill Radar Chart Placeholder -->
+            <div class="glass-effect rounded-xl p-8 max-w-2xl mx-auto">
+                <h3 class="text-2xl font-futuristic font-bold text-center mb-8 text-matrix">
+                    SKILL MATRIX
+                </h3>
+                <div class="relative w-80 h-80 mx-auto">
+                    <!-- Hexagonal skill visualization placeholder -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="w-64 h-64 relative">
+                            <!-- Center -->
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="w-16 h-16 rounded-full glass-effect border border-matrix flex items-center justify-center">
+                                    <i class="fas fa-code text-matrix text-xl"></i>
+                                </div>
+                            </div>
+                            
+                            <!-- Skill Points -->
+                            <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-4">
+                                <div class="glass-effect px-3 py-2 rounded-lg border border-cyber-cyan/50">
+                                    <span class="font-mono text-xs text-cyber-cyan">Frontend</span>
+                                </div>
+                            </div>
+                            <div class="absolute top-16 right-0 transform translate-x-4">
+                                <div class="glass-effect px-3 py-2 rounded-lg border border-cyber-pink/50">
+                                    <span class="font-mono text-xs text-cyber-pink">Backend</span>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-16 right-0 transform translate-x-4">
+                                <div class="glass-effect px-3 py-2 rounded-lg border border-cyber-yellow/50">
+                                    <span class="font-mono text-xs text-cyber-yellow">Database</span>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-4">
+                                <div class="glass-effect px-3 py-2 rounded-lg border border-cyber-purple/50">
+                                    <span class="font-mono text-xs text-cyber-purple">DevOps</span>
+                                </div>
+                            </div>
+                            <div class="absolute bottom-16 left-0 transform -translate-x-4">
+                                <div class="glass-effect px-3 py-2 rounded-lg border border-matrix/50">
+                                    <span class="font-mono text-xs text-matrix">Mobile</span>
+                                </div>
+                            </div>
+                            <div class="absolute top-16 left-0 transform -translate-x-4">
+                                <div class="glass-effect px-3 py-2 rounded-lg border border-white/50">
+                                    <span class="font-mono text-xs text-white">Design</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-futuristic font-bold mb-4">
+                    <span class="text-cyber-yellow neon-text">PROJECT</span>
+                    <span class="text-white">.</span><span class="text-matrix">SHOWCASE</span>
+                </h2>
+                <div class="w-32 h-1 bg-gradient-to-r from-cyber-yellow to-matrix mx-auto"></div>
+            </div>
+            
+            <!-- IDE-Style Project Tabs -->
+            <div class="max-w-6xl mx-auto">
+                <!-- Tab Navigation -->
+                <div class="flex flex-wrap border-b border-terminal-gray mb-8">
+                    <button class="ide-tab px-6 py-3 font-mono text-sm border-r border-terminal-gray hover:bg-dark-card transition-colors active" data-mock="true">
+                        <i class="fas fa-file-code mr-2 text-cyber-cyan"></i>
+                        e-commerce-app.jsx
+                    </button>
+                    <button class="ide-tab px-6 py-3 font-mono text-sm border-r border-terminal-gray hover:bg-dark-card transition-colors" data-mock="true">
+                        <i class="fas fa-file-code mr-2 text-cyber-pink"></i>
+                        task-manager.js
+                    </button>
+                    <button class="ide-tab px-6 py-3 font-mono text-sm border-r border-terminal-gray hover:bg-dark-card transition-colors" data-mock="true">
+                        <i class="fas fa-file-code mr-2 text-cyber-yellow"></i>
+                        portfolio.tsx
+                    </button>
+                </div>
+                
+                <!-- Project Grid -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Project 1 -->
+                    <div class="glass-effect rounded-xl overflow-hidden border border-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all group cursor-pointer" data-mock="true">
+                        <div class="relative">
+                            <!-- Mock project screenshot -->
+                            <div class="h-48 bg-gradient-to-br from-cyber-cyan/20 to-dark-bg flex items-center justify-center">
+                                <i class="fas fa-shopping-cart text-4xl text-cyber-cyan"></i>
+                            </div>
+                            <div class="absolute inset-0 bg-cyber-cyan/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-eye text-2xl text-white mb-2"></i>
+                                    <p class="font-mono text-sm">View Project</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-futuristic font-bold text-cyber-cyan mb-2">E-Commerce Platform</h3>
+                            <p class="text-gray-300 text-sm mb-4 font-mono">
+                                Full-stack e-commerce solution with React, Node.js, and MongoDB. Features include user authentication, payment processing, and admin dashboard.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 text-xs font-mono bg-matrix/20 text-matrix rounded">React</span>
+                                <span class="px-2 py-1 text-xs font-mono bg-cyber-pink/20 text-cyber-pink rounded">Node.js</span>
+                                <span class="px-2 py-1 text-xs font-mono bg-cyber-yellow/20 text-cyber-yellow rounded">MongoDB</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center">
+                                <button class="flex items-center text-cyber-cyan hover:text-matrix transition-colors font-mono text-sm" data-mock="true">
+                                    <i class="fas fa-external-link-alt mr-2"></i>
+                                    Live Demo
+                                </button>
+                                <button class="flex items-center text-gray-400 hover:text-white transition-colors font-mono text-sm" data-mock="true">
+                                    <i class="fab fa-github mr-2"></i>
+                                    Code
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 2 -->
+                    <div class="glass-effect rounded-xl overflow-hidden border border-cyber-pink/20 hover:border-cyber-pink/50 transition-all group cursor-pointer" data-mock="true">
+                        <div class="relative">
+                            <div class="h-48 bg-gradient-to-br from-cyber-pink/20 to-dark-bg flex items-center justify-center">
+                                <i class="fas fa-tasks text-4xl text-cyber-pink"></i>
+                            </div>
+                            <div class="absolute inset-0 bg-cyber-pink/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-eye text-2xl text-white mb-2"></i>
+                                    <p class="font-mono text-sm">View Project</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-futuristic font-bold text-cyber-pink mb-2">Task Management App</h3>
+                            <p class="text-gray-300 text-sm mb-4 font-mono">
+                                Collaborative task management application with real-time updates, team collaboration, and advanced filtering capabilities.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 text-xs font-mono bg-matrix/20 text-matrix rounded">Next.js</span>
+                                <span class="px-2 py-1 text-xs font-mono bg-cyber-purple/20 text-cyber-purple rounded">Socket.io</span>
+                                <span class="px-2 py-1 text-xs font-mono bg-cyber-cyan/20 text-cyber-cyan rounded">PostgreSQL</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center">
+                                <button class="flex items-center text-cyber-pink hover:text-matrix transition-colors font-mono text-sm" data-mock="true">
+                                    <i class="fas fa-external-link-alt mr-2"></i>
+                                    Live Demo
+                                </button>
+                                <button class="flex items-center text-gray-400 hover:text-white transition-colors font-mono text-sm" data-mock="true">
+                                    <i class="fab fa-github mr-2"></i>
+                                    Code
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Project 3 -->
+                    <div class="glass-effect rounded-xl overflow-hidden border border-cyber-yellow/20 hover:border-cyber-yellow/50 transition-all group cursor-pointer" data-mock="true">
+                        <div class="relative">
+                            <div class="h-48 bg-gradient-to-br from-cyber-yellow/20 to-dark-bg flex items-center justify-center">
+                                <i class="fas fa-user-circle text-4xl text-cyber-yellow"></i>
+                            </div>
+                            <div class="absolute inset-0 bg-cyber-yellow/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <div class="text-center">
+                                    <i class="fas fa-eye text-2xl text-white mb-2"></i>
+                                    <p class="font-mono text-sm">View Project</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-futuristic font-bold text-cyber-yellow mb-2">Portfolio Website</h3>
+                            <p class="text-gray-300 text-sm mb-4 font-mono">
+                                Modern, animated portfolio website with 3D elements, smooth transitions, and interactive components built with cutting-edge technologies.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="px-2 py-1 text-xs font-mono bg-matrix/20 text-matrix rounded">React</span>
+                                <span class="px-2 py-1 text-xs font-mono bg-cyber-purple/20 text-cyber-purple rounded">Three.js</span>
+                                <span class="px-2 py-1 text-xs font-mono bg-cyber-cyan/20 text-cyber-cyan rounded">GSAP</span>
+                            </div>
+                            
+                            <div class="flex justify-between items-center">
+                                <button class="flex items-center text-cyber-yellow hover:text-matrix transition-colors font-mono text-sm" data-mock="true">
+                                    <i class="fas fa-external-link-alt mr-2"></i>
+                                    Live Demo
+                                </button>
+                                <button class="flex items-center text-gray-400 hover:text-white transition-colors font-mono text-sm" data-mock="true">
+                                    <i class="fab fa-github mr-2"></i>
+                                    Code
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- View All Projects Button -->
+                <div class="text-center mt-12">
+                    <button class="glass-effect px-8 py-4 rounded-lg border border-matrix/50 hover:border-matrix hover:shadow-lg hover:shadow-glow-green transition-all font-mono group" data-mock="true">
+                        <i class="fas fa-folder-open mr-2"></i>
+                        Load More Projects
+                        <span class="ml-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-futuristic font-bold mb-4">
+                    <span class="text-matrix neon-text">CONTACT</span>
+                    <span class="text-white">.</span><span class="text-cyber-pink">INIT</span>
+                </h2>
+                <div class="w-32 h-1 bg-gradient-to-r from-matrix to-cyber-pink mx-auto"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12">
+                    <!-- Contact Info -->
+                    <div class="space-y-8">
+                        <div class="terminal-window rounded-lg p-6">
+                            <div class="font-mono text-sm space-y-3">
+                                <div class="text-cyber-cyan">
+                                    <span class="text-cyber-pink">// </span>Establish Connection
+                                </div>
+                                <div class="text-white">
+                                    Ready to bring your ideas to life? Let's connect and build something 
+                                    <span class="text-matrix">extraordinary</span> together.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-6">
+                            <div class="glass-effect p-6 rounded-lg border border-cyber-cyan/20 hover:border-cyber-cyan/50 transition-all group">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-cyber-cyan/20 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-envelope text-cyber-cyan"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-mono text-sm text-gray-400">EMAIL</div>
+                                        <div class="font-mono text-cyber-cyan" data-mock="true">john.smith@cyberdev.com</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="glass-effect p-6 rounded-lg border border-cyber-pink/20 hover:border-cyber-pink/50 transition-all group">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-cyber-pink/20 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-phone text-cyber-pink"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-mono text-sm text-gray-400">PHONE</div>
+                                        <div class="font-mono text-cyber-pink" data-mock="true">+1 (555) 123-4567</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="glass-effect p-6 rounded-lg border border-matrix/20 hover:border-matrix/50 transition-all group">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-matrix/20 rounded-full flex items-center justify-center mr-4">
+                                        <i class="fas fa-map-marker-alt text-matrix"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-mono text-sm text-gray-400">LOCATION</div>
+                                        <div class="font-mono text-matrix" data-mock="true">San Francisco, CA</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Social Links -->
+                        <div class="flex space-x-4">
+                            <a href="#" class="glass-effect p-3 rounded-lg border border-cyber-cyan/20 hover:border-cyber-cyan hover:shadow-lg hover:shadow-glow-cyan transition-all" data-mock="true">
+                                <i class="fab fa-github text-cyber-cyan text-xl"></i>
+                            </a>
+                            <a href="#" class="glass-effect p-3 rounded-lg border border-cyber-pink/20 hover:border-cyber-pink hover:shadow-lg hover:shadow-glow-pink transition-all" data-mock="true">
+                                <i class="fab fa-linkedin text-cyber-pink text-xl"></i>
+                            </a>
+                            <a href="#" class="glass-effect p-3 rounded-lg border border-cyber-purple/20 hover:border-cyber-purple hover:shadow-lg hover:shadow-glow-purple transition-all" data-mock="true">
+                                <i class="fab fa-twitter text-cyber-purple text-xl"></i>
+                            </a>
+                            <a href="#" class="glass-effect p-3 rounded-lg border border-matrix/20 hover:border-matrix hover:shadow-lg hover:shadow-glow-green transition-all" data-mock="true">
+                                <i class="fas fa-globe text-matrix text-xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Terminal Contact Form -->
+                    <div class="terminal-window rounded-lg p-6">
+                        <div class="flex items-center mb-6 border-b border-terminal-gray pb-4">
+                            <div class="flex space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="flex-1 text-center font-mono text-sm text-gray-400">
+                                ~/contact/message.form
+                            </div>
+                        </div>
+                        
+                        <form class="space-y-6" data-mock="true">
+                            <!-- TODO: Implement form submission logic -->
+                            <div>
+                                <label class="font-mono text-sm text-cyber-cyan block mb-2">
+                                    <span class="text-cyber-pink">const</span> name = 
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="w-full bg-dark-card border border-terminal-gray rounded-lg px-4 py-3 font-mono text-sm focus:border-matrix focus:outline-none focus:shadow-lg focus:shadow-glow-green/20 transition-all"
+                                    placeholder="Enter your name"
+                                    data-mock="true"
+                                />
+                            </div>
+                            
+                            <div>
+                                <label class="font-mono text-sm text-cyber-cyan block mb-2">
+                                    <span class="text-cyber-pink">const</span> email = 
+                                </label>
+                                <input 
+                                    type="email" 
+                                    class="w-full bg-dark-card border border-terminal-gray rounded-lg px-4 py-3 font-mono text-sm focus:border-matrix focus:outline-none focus:shadow-lg focus:shadow-glow-green/20 transition-all"
+                                    placeholder="your.email@domain.com"
+                                    data-mock="true"
+                                />
+                            </div>
+                            
+                            <div>
+                                <label class="font-mono text-sm text-cyber-cyan block mb-2">
+                                    <span class="text-cyber-pink">const</span> subject = 
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="w-full bg-dark-card border border-terminal-gray rounded-lg px-4 py-3 font-mono text-sm focus:border-matrix focus:outline-none focus:shadow-lg focus:shadow-glow-green/20 transition-all"
+                                    placeholder="Project collaboration"
+                                    data-mock="true"
+                                />
+                            </div>
+                            
+                            <div>
+                                <label class="font-mono text-sm text-cyber-cyan block mb-2">
+                                    <span class="text-cyber-pink">const</span> message = 
+                                </label>
+                                <textarea 
+                                    rows="6" 
+                                    class="w-full bg-dark-card border border-terminal-gray rounded-lg px-4 py-3 font-mono text-sm focus:border-matrix focus:outline-none focus:shadow-lg focus:shadow-glow-green/20 transition-all resize-none"
+                                    placeholder="Tell me about your project idea..."
+                                    data-mock="true"
+                                ></textarea>
+                            </div>
+                            
+                            <button 
+                                type="submit" 
+                                class="w-full glass-effect py-4 rounded-lg border border-matrix/50 hover:border-matrix hover:shadow-lg hover:shadow-glow-green transition-all font-mono group"
+                                data-mock="true"
+                            >
+                                <span class="text-cyber-pink">execute</span>
+                                <span class="text-white">(</span>
+                                <span class="text-matrix">'sendMessage'</span>
+                                <span class="text-white">)</span>
+                                <span class="ml-2 opacity-0 group-hover:opacity-100 transition-opacity">→</span>
+                            </button>
+                        </form>
+                        
+                        <!-- Terminal Output -->
+                        <div class="mt-6 p-4 bg-dark-bg rounded border border-terminal-gray">
+                            <div class="font-mono text-xs space-y-1">
+                                <div class="text-matrix">
+                                    <span class="animate-terminal-blink">▶</span> Initializing secure connection...
+                                </div>
+                                <div class="text-cyber-cyan">
+                                    ✓ Encryption protocols active
+                                </div>
+                                <div class="text-gray-400">
+                                    → Ready to receive your message
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="border-t border-terminal-gray py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center space-y-6">
+                <div class="font-mono text-sm space-y-2">
+                    <div class="text-cyber-cyan">
+                        <span class="text-cyber-pink">// </span>End of transmission
+                    </div>
+                    <div class="text-white">
+                        Built with <span class="text-cyber-pink">❤️</span> and lots of 
+                        <span class="text-matrix">☕</span> by CyberDev
+                    </div>
+                </div>
+                
+                <div class="w-32 h-1 bg-gradient-to-r from-cyber-cyan via-matrix to-cyber-pink mx-auto"></div>
+                
+                <div class="font-mono text-xs text-gray-400">
+                    © 2024 CyberDev Portfolio. All rights reserved.
+                    <br>
+                    <span class="text-matrix">console.log</span>(<span class="text-cyber-pink">'Thanks for visiting!'</span>);
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        (function() {
+            // Initialize animations and interactions
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+            
+            // Add typing animation to terminal elements
+            function typeWriter(element, text, speed = 50) {
+                let i = 0;
+                element.innerHTML = '';
+                function type() {
+                    if (i < text.length) {
+                        element.innerHTML += text.charAt(i);
+                        i++;
+                        setTimeout(type, speed);
+                    }
+                }
+                type();
+            }
+            
+            // Initialize skill progress animations on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const skillObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressBars = entry.target.querySelectorAll('.progress-bar');
+                        progressBars.forEach((bar, index) => {
+                            setTimeout(() => {
+                                bar.style.animation = 'skill-progress 2s ease-out forwards';
+                            }, index * 200);
+                        });
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe skills section
+            const skillsSection = document.querySelector('#skills');
+            if (skillsSection) {
+                skillObserver.observe(skillsSection);
+            }
+            
+            // Add hover effects to project cards
+            const projectCards = document.querySelectorAll('[data-mock="true"]');
+            projectCards.forEach(card => {
+                if (card.classList.contains('glass-effect') && card.querySelector('.fas')) {
+                    card.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-5px) scale(1.02)';
+                        this.style.transition = 'all 0.3s ease';
+                    });
+                    
+                    card.addEventListener('mouseleave', function() {
+                        this.style.transform = 'translateY(0) scale(1)';
+                    });
+                }
+            });
+            
+            // Simulate terminal typing on load
+            window.addEventListener('load', function() {
+                const terminalElements = document.querySelectorAll('.terminal-window');
+                terminalElements.forEach((terminal, index) => {
+                    setTimeout(() => {
+                        terminal.style.opacity = '0';
+                        terminal.style.transform = 'translateY(20px)';
+                        terminal.style.transition = 'all 0.5s ease';
+                        
+                        setTimeout(() => {
+                            terminal.style.opacity = '1';
+                            terminal.style.transform = 'translateY(0)';
+                        }, 100);
+                    }, index * 200);
+                });
+            });
+            
+            // Add particle movement based on mouse position
+            document.addEventListener('mousemove', function(e) {
+                const particles = document.querySelectorAll('.particle');
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                particles.forEach((particle, index) => {
+                    const speed = (index + 1) * 0.5;
+                    const x = mouseX * speed;
+                    const y = mouseY * speed;
+                    
+                    particle.style.transform = `translate(${x}px, ${y}px)`;
+                    particle.style.transition = 'transform 0.3s ease';
+                });
+            });
+            
+            // Theme toggle functionality placeholder
+            const themeToggle = document.querySelector('button .fa-moon');
+            if (themeToggle) {
+                themeToggle.parentElement.addEventListener('click', function() {
+                    // TODO: Implement theme switching logic
+                    console.log('Theme toggle clicked');
+                    this.classList.add('animate-pulse');
+                    setTimeout(() => {
+                        this.classList.remove('animate-pulse');
+                    }, 1000);
+                });
+            }
+            
+        })();
+    </script>
+</body>
+</html>
