@@ -108,20 +108,64 @@ Update your details in `server/storage.ts`:
 - Animations in `client/src/lib/animations.ts`
 - Component styles in individual component files
 
+## � Security Features
+
+- **Environment-based admin protection**: Admin routes only available in development
+- **Rate limiting**: Prevents abuse with configurable limits
+- **Input validation**: Sanitized contact form with email validation
+- **Security headers**: Helmet.js with CSP, XSS, and clickjacking protection
+- **CORS configuration**: Restricted origins in production
+- **Error handling**: No sensitive data leakage in production
+
+See [SECURITY.md](SECURITY.md) for detailed security configuration.
+
 ## 🚀 Deployment
 
-### Recommended Platforms
-- **Vercel**: For frontend-only deployment
-- **Railway**: For full-stack deployment
-- **Render**: For backend API hosting
-- **Netlify**: For static site deployment
-
 ### Environment Variables
-Create a `.env` file for production:
+
+Create a `.env.production` file:
+
 ```env
 NODE_ENV=production
 PORT=5000
+# Add your production domain for CORS
+ALLOWED_ORIGINS=https://yourdomain.com
 ```
+
+### Production Build
+
+```bash
+npm run build
+npm start
+```
+
+### Docker Deployment (Optional)
+
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY dist ./dist
+EXPOSE 5000
+CMD ["npm", "start"]
+```
+
+### Platform Recommendations
+
+- **Vercel**: Full-stack deployment with automatic HTTPS
+- **Railway**: Simple full-stack hosting
+- **Render**: Free tier with automatic deploys
+- **Heroku**: Traditional but reliable
+
+## 🔧 Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Create production build
+- `npm run check` - Run TypeScript checks
+- `npm start` - Start production server
 
 ## 🤝 Contributing
 
