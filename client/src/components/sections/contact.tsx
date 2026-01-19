@@ -41,10 +41,11 @@ export function Contact() {
       });
       queryClient.invalidateQueries({ queryKey: ["/api/contact"] });
     },
-    onError: () => {
+    onError: (error: any) => {
+      console.error("Contact error:", error);
       toast({
         title: "Failed to send message",
-        description: "Please try again later.",
+        description: error?.message || "Please try again later.",
         variant: "destructive",
       });
     }
@@ -55,12 +56,15 @@ export function Contact() {
     
     // Validate form data
     try {
+      console.log("Submitting form data:", formData);
       const validatedData = insertContactMessageSchema.parse(formData);
+      console.log("Validated data:", validatedData);
       contactMutation.mutate(validatedData);
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Validation error:", error);
       toast({
         title: "Please fill in all required fields",
-        description: "Make sure all fields are completed correctly.",
+        description: error?.message || "Make sure all fields are completed correctly.",
         variant: "destructive",
       });
     }

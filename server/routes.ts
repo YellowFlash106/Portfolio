@@ -199,12 +199,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Contact routes
   app.post("/api/contact", async (req, res) => {
     try {
+      console.log("Contact form received:", req.body);
+      
       // Sanitize input
       const sanitizedBody = {
-        name: (req.body.name || '').trim().substring(0, 100),
+        firstName: (req.body.firstName || '').trim().substring(0, 100),
+        lastName: (req.body.lastName || '').trim().substring(0, 100),
         email: (req.body.email || '').trim().toLowerCase().substring(0, 254),
+        subject: (req.body.subject || '').trim().substring(0, 200),
         message: (req.body.message || '').trim().substring(0, 1000),
       };
+
+      console.log("Sanitized data:", sanitizedBody);
 
       // Basic email validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -213,15 +219,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Check for minimum lengths
-      if (sanitizedBody.name.length < 2 || sanitizedBody.message.length < 10) {
-        return res.status(400).json({ message: "Name must be at least 2 characters and message at least 10 characters" });
+      if (sanitizedBody.firstName.length < 2 || sanitizedBody.message.length < 10) {
+        return res.status(400).json({ message: "First name must be at least 2 characters and message at least 10 characters" });
       }
 
       const messageData = insertContactMessageSchema.parse(sanitizedBody);
+      console.log("Parsed message data:", messageData);
+      
       const message = await storage.createContactMessage(messageData);
+      console.log("Message created:", message);
+      
       res.status(201).json({ message: "Message sent successfully", id: message.id });
-    } catch (error) {
-      res.status(400).json({ message: "Invalid contact message data" });
+    } catch (error: any) {
+      console.error("Contact message error:", error);
+      res.status(400).json({ message: error?.message || "Invalid contact message data" });
     }
   });
 

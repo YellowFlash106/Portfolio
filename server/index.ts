@@ -8,15 +8,25 @@ import { setupVite, serveStatic, log } from "./vite";
 const app = express();
 
 // Security middleware
+const isDevelopment = process.env.NODE_ENV === 'development';
+
 app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        "https://fonts.googleapis.com",
+      ],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:", "https:", "http:"],
-      scriptSrc: ["'self'"],
-      connectSrc: ["'self'"],
+      scriptSrc: isDevelopment 
+        ? ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://replit.com"]
+        : ["'self'"],
+      connectSrc: isDevelopment
+        ? ["'self'", "ws://localhost:*", "http://localhost:*"]
+        : ["'self'"],
       frameSrc: ["'none'"],
       objectSrc: ["'none'"],
     },
@@ -37,7 +47,7 @@ app.use(cors({
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: process.env.NODE_ENV === 'production' ? 100 : 1000, // 1000 requests in dev, 100 in prod
   message: 'Too many requests from this IP, please try again later.',
   standardHeaders: true,
   legacyHeaders: false,
