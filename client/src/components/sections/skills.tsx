@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { Search, Code, Server, Database, Cloud, Wrench, Globe } from "lucide-react";
 import { type Skill } from "@shared/schema";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { skillsData } from "@/data/skills";
 
 const categoryIcons = {
   Frontend: Code,
@@ -93,9 +93,7 @@ export function Skills() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
 
-  const { data: skills = [], isLoading } = useQuery<Skill[]>({
-    queryKey: ["/api/skills"],
-  });
+  const skills = skillsData;
 
   const categories = Array.from(new Set(skills.map(skill => skill.category)));
   
@@ -110,18 +108,6 @@ export function Skills() {
     acc[category] = filteredSkills.filter(skill => skill.category === category);
     return acc;
   }, {} as Record<string, Skill[]>);
-
-  if (isLoading) {
-    return (
-      <section className="py-20 dark:bg-black bg-white relative" data-testid="skills-loading">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="animate-pulse">Loading skills...</div>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="skills" className="py-20 dark:bg-black bg-white relative" data-testid="skills-section">
