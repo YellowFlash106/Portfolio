@@ -1,18 +1,15 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { ExternalLink, Github } from "lucide-react";
 import { ProjectModal } from "@/components/ui/project-modal";
 import { type Project } from "@shared/schema";
+import { projectsData } from "@/data/projects";
 
 export function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { data: projects = [], isLoading } = useQuery<Project[]>({
-    queryKey: ["/api/projects"],
-    select: (data) => data.filter(project => project.featured),
-  });
+  const projects = projectsData.filter(project => project.featured);
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
@@ -23,18 +20,6 @@ export function Projects() {
     setIsModalOpen(false);
     setSelectedProject(null);
   };
-
-  if (isLoading) {
-    return (
-      <section className="py-20 dark:bg-gray-900 bg-gray-50" data-testid="projects-loading">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="animate-pulse">Loading projects...</div>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="projects" className="py-20 dark:bg-gray-900 bg-gray-50 relative overflow-hidden" data-testid="projects-section">
