@@ -19,7 +19,7 @@ export const projectsData: Project[] = [
     title: "StreamOn",
     description: "Social communication platform with real-time messaging, video calls, and language exchange features.",
     longDescription: "Developed a comprehensive social communication platform leveraging Stream's Chat & Video APIs to enable scalable real-time messaging, group and one-on-one video calls, screen sharing, and recording capabilities. Implemented advanced features including typing indicators, message reactions, activity feeds, and comprehensive moderation tools to ensure safe and engaging user interactions. Built robust JWT-based authentication system with protected routes for secure user access and personalization, featuring 32 unique UI themes. Designed the platform as a language exchange and social interaction hub to enhance global collaboration and user retention, utilizing modern MERN stack technologies with TanStack Query for efficient data fetching and state management.",
-    imageUrl: "/public/son.png",
+    imageUrl: "/son.png",
     demoUrl: "https://streamon-1.onrender.com/",
     codeUrl: "https://github.com/YellowFlash106/streamOn",
     technologies: ["MERN", "Tailwind CSS", "JWT Authentication", "TanStack Query", "Stream API", "Socket.io", "React", "Node.js", "MongoDB", "Express"],
